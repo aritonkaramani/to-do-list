@@ -1,7 +1,7 @@
 import './App.scss';
 import React, { useState , useRef, useEffect } from 'react';
 import TodoList from './components/todo-list/TodoList';
-import {uuid} from 'uuidv4';
+import { v4 as uuidv4 } from 'uuid';
 
 const LOCAL_STORAGE_KEY = 'todoApp.todos'
 
@@ -29,7 +29,7 @@ function App() {
     const name = todoNameRef.current.value
     if (name === '') return
     setTodos(prevTodos => {
-      return [...prevTodos, { id: uuid(), name: name, complete: false}]
+      return [...prevTodos, { id: uuidv4(), name: name, complete: false}]
     })
     todoNameRef.current.value = null;
   }
@@ -45,7 +45,7 @@ function App() {
   }
 
   function onEnterPress(e){
-    if(e.keyCode == 13)
+    if(e.keyCode === 13)
     handleTodoAdd(e)
 
  }
@@ -53,11 +53,15 @@ function App() {
   return (
     <div className="App">
       <div className="wrapper">
+        <h1>TODO</h1>
       <div className="inputs">
         <input ref={todoNameRef} type="text" onKeyDown={onEnterPress}/>
+        <div className="buttons">
           <div className="clicks" onClick={handleTodoAdd}>Add</div>
           <div className="clicks" onClick={handleClearTodo}>Delete Task</div>
           <div className="clicks" onClick={handleReset}>Reset</div>
+        </div>
+          
       </div>
       
       <TodoList todos={todos} toggleTodo={toggleTodo} />
